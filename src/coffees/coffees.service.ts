@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Coffee } from 'src/coffees/entities/coffee.entity';
 
 @Injectable()
@@ -17,7 +17,14 @@ export class CoffeesService {
   }
 
   findOne(id: string) {
-    return this.coffees.find((item) => item.id === +id);
+    const coffee = this.coffees.find((item) => item.id === +id);
+
+    if (!coffee) {
+      throw new BadRequestException(
+        `Coffee #${id} not found. Please enter valid id.`,
+      );
+    }
+    return coffee;
   }
 
   create(createCoffeeDto: any) {
