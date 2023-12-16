@@ -8,9 +8,11 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { CoffeesService } from 'src/coffees/coffees.service';
 
 @Controller('coffees')
 export class CoffeesController {
+  constructor(private readonly coffeesService: CoffeesService) {}
   @Get()
   findAll(@Query() paginatiionQuery) {
     const { limit, offset } = paginatiionQuery;
